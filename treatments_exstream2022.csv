@@ -1,0 +1,129 @@
+System,Block,Channel,Velocity,Salinity,Fish,Phase,Temperature,Chl_Höhe,Chl_Breite,surf_area
+IMP,B1,C05,normal,background,,stress,increased,3.6,5,18
+IMP,B1,C06,reduced,background,,stress,increased,3.5,4.5,15.75
+IMP,B1,C07,normal,background,,stress,increased,4,4.5,18
+IMP,B1,C08,reduced,salt,,stress,increased,3,4.5,13.5
+IMP,B1,C10,reduced,background,,stress,increased,3,4.5,13.5
+IMP,B1,C11,reduced,salt,,stress,increased,4,5,20
+IMP,B1,C13,normal,salt,,stress,increased,4,6,24
+IMP,B1,C15,normal,salt,,stress,increased,4,7,28
+IMP,B2,C17,reduced,salt,,stress,normal,4,5,20
+IMP,B2,C21,normal,background,,stress,normal,4,4.8,19.2
+IMP,B2,C23,normal,background,,stress,normal,5,5,25
+IMP,B2,C24,reduced,salt,,stress,normal,4,5,20
+IMP,B2,C25,normal,salt,,stress,normal,3.5,4,14
+IMP,B2,C26,normal,salt,,stress,normal,4,5,20
+IMP,B2,C28,reduced,background,,stress,normal,4,5,20
+IMP,B2,C30,reduced,background,,stress,normal,4,4.5,18
+IMP,B3,C33,reduced,background,,stress,normal,4,5,20
+IMP,B3,C35,normal,background,,stress,normal,4,6,24
+IMP,B3,C38,normal,salt,,stress,normal,4,4,16
+IMP,B3,C39,reduced,background,,stress,normal,4,5,20
+IMP,B3,C40,reduced,salt,,stress,normal,4,4,16
+IMP,B3,C43,normal,background,,stress,normal,4,5,20
+IMP,B3,C47,normal,salt,,stress,normal,4,5,20
+IMP,B3,C48,reduced,salt,,stress,normal,4,4,16
+IMP,B4,C49,normal,salt,,stress,increased,4,5,20
+IMP,B4,C50,reduced,salt,,stress,increased,4,5,20
+IMP,B4,C51,normal,salt,,stress,increased,4,5.2,20.8
+IMP,B4,C56,reduced,background,,stress,increased,4,5.3,21.2
+IMP,B4,C59,reduced,background,,stress,increased,4,6,24
+IMP,B4,C61,reduced,salt,,stress,increased,4,7,28
+IMP,B4,C62,normal,background,,stress,increased,4,5.5,22
+IMP,B4,C63,normal,background,,stress,increased,4,4.8,19.2
+AMV,B1,C02,,background,no fish,stress,increased,4,3.8,15.2
+AMV,B1,C03,,salt,no fish,stress,increased,4,4,16
+AMV,B1,C06,,salt,no fish,stress,increased,4,4.2,16.8
+AMV,B1,C07,,background,fish,stress,increased,3.9,4.6,17.939999999999998
+AMV,B1,C08,,salt,fish,stress,increased,3.9,3.7,14.43
+AMV,B1,C11,,background,fish,stress,increased,4,5.6,22.4
+AMV,B1,C14,,background,no fish,stress,increased,5.3,4.8,25.439999999999998
+AMV,B1,C15,,salt,fish,stress,increased,4,4.5,18
+AMV,B2,C20,,background,fish,stress,normal,4.3,4,17.2
+AMV,B2,C23,,background,no fish,stress,normal,4,4.6,18.4
+AMV,B2,C24,,salt,no fish,stress,normal,4,5,20
+AMV,B2,C25,,salt,fish,stress,normal,4,6,24
+AMV,B2,C26,,salt,fish,stress,normal,4,4.5,18
+AMV,B2,C28,,background,no fish,stress,normal,3.5,4,14
+AMV,B2,C31,,background,fish,stress,normal,4,4.6,18.4
+AMV,B2,C32,,salt,no fish,stress,normal,4,5,20
+AMV,B3,C34,,salt,fish,stress,increased,5,5.2,26
+AMV,B3,C36,,salt,fish,stress,increased,4,4,16
+AMV,B3,C39,,background,no fish,stress,increased,4,6,24
+AMV,B3,C40,,background,no fish,stress,increased,4,5,20
+AMV,B3,C41,,salt,no fish,stress,increased,4,5.5,22
+AMV,B3,C43,,background,fish,stress,increased,4,4,16
+AMV,B3,C45,,salt,no fish,stress,increased,4,5,20
+AMV,B3,C46,,background,fish,stress,increased,4,4.2,16.8
+AMV,B4,C49,,background,fish,stress,normal,4,4.5,18
+AMV,B4,C53,,salt,fish,stress,normal,4,4.2,16.8
+AMV,B4,C54,,background,no fish,stress,normal,4,4.8,19.2
+AMV,B4,C58,,salt,fish,stress,normal,4,4,16
+AMV,B4,C59,,salt,no fish,stress,normal,4,4.9,19.6
+AMV,B4,C61,,background,no fish,stress,normal,4,3.5,14
+AMV,B4,C62,,salt,no fish,stress,normal,4,5,20
+AMV,B4,C63,,background,fish,stress,normal,5.5,6.3,34.65
+IMP,B1,C01,reduced,background,,recovery,increased,4.2,4,16.8
+IMP,B1,C02,reduced,salt,,recovery,increased,4.2,3.8,15.959999999999999
+IMP,B1,C03,reduced,salt,,recovery,increased,3.9,3.6,14.04
+IMP,B1,C04,normal,background,,recovery,increased,4.5,3.8,17.099999999999998
+IMP,B1,C09,normal,background,,recovery,increased,4,4,16
+IMP,B1,C12,reduced,background,,recovery,increased,3.8,3.3,12.54
+IMP,B1,C14,normal,salt,,recovery,increased,3.3,3.6,11.879999999999999
+IMP,B1,C16,normal,salt,,recovery,increased,3.9,4.1,15.989999999999998
+IMP,B2,C18,normal,background,,recovery,normal,3.9,3.1,12.09
+IMP,B2,C19,normal,background,,recovery,normal,4,3.9,15.6
+IMP,B2,C20,reduced,salt,,recovery,normal,3.8,3.5,13.299999999999999
+IMP,B2,C22,reduced,background,,recovery,normal,4.3,3.4,14.62
+IMP,B2,C27,normal,salt,,recovery,normal,3.6,3.5,12.6
+IMP,B2,C29,reduced,background,,recovery,normal,3.9,3.2,12.48
+IMP,B2,C31,normal,salt,,recovery,normal,3.6,3.5,12.6
+IMP,B2,C32,reduced,salt,,recovery,normal,3.3,3.8,12.54
+IMP,B3,C34,reduced,background,,recovery,normal,3.4,4,13.6
+IMP,B3,C36,normal,salt,,recovery,normal,3.5,3.6,12.6
+IMP,B3,C37,normal,background,,recovery,normal,3.4,4.2,14.28
+IMP,B3,C41,reduced,salt,,recovery,normal,3.8,3.9,14.819999999999999
+IMP,B3,C42,normal,background,,recovery,normal,3.7,3.9,14.43
+IMP,B3,C44,normal,salt,,recovery,normal,4.5,3.5,15.75
+IMP,B3,C45,reduced,background,,recovery,normal,3.8,3.9,14.819999999999999
+IMP,B3,C46,reduced,salt,,recovery,normal,4,3.5,14
+IMP,B4,C52,normal,background,,recovery,increased,4,3.8,15.2
+IMP,B4,C53,normal,salt,,recovery,increased,4.1,4,16.4
+IMP,B4,C54,normal,background,,recovery,increased,4,4,16
+IMP,B4,C55,reduced,background,,recovery,increased,3.8,4,15.2
+IMP,B4,C57,reduced,background,,recovery,increased,3.1,5.9,18.290000000000003
+IMP,B4,C58,reduced,salt,,recovery,increased,3.8,4,15.2
+IMP,B4,C60,normal,salt,,recovery,increased,3.9,3.8,14.819999999999999
+IMP,B4,C64,reduced,salt,,recovery,increased,5.8,4,23.2
+AMV,B1,C01,,background,no fish,recovery,increased,3.8,3.6,13.68
+AMV,B1,C04,,background,no fish,recovery,increased,4.4,4,17.6
+AMV,B1,C05,,salt,fish,recovery,increased,4.4,4,17.6
+AMV,B1,C09,,salt,fish,recovery,increased,4,3.8,15.2
+AMV,B1,C10,,background,fish,recovery,increased,4,3,12
+AMV,B1,C12,,background,fish,recovery,increased,3.6,4,14.4
+AMV,B1,C13,,salt,no fish,recovery,increased,3.5,4,14
+AMV,B1,C16,,salt,no fish,recovery,increased,4,3.8,15.2
+AMV,B2,C17,,salt,no fish,recovery,normal,4.4,4.2,18.480000000000004
+AMV,B2,C18,,background,no fish,recovery,normal,4,4,16
+AMV,B2,C19,,salt,fish,recovery,normal,3.8,4,15.2
+AMV,B2,C21,,salt,fish,recovery,normal,4.3,4,17.2
+AMV,B2,C22,,background,no fish,recovery,normal,4.3,4,17.2
+AMV,B2,C27,,salt,no fish,recovery,normal,3.7,3.5,12.950000000000001
+AMV,B2,C29,,background,fish,recovery,normal,4,4,16
+AMV,B2,C30,,background,fish,recovery,normal,4.2,3.8,15.959999999999999
+AMV,B3,C33,,background,fish,recovery,increased,4.2,3.8,15.959999999999999
+AMV,B3,C35,,background,no fish,recovery,increased,4.8,4,19.2
+AMV,B3,C37,,background,no fish,recovery,increased,4.4,3.8,16.72
+AMV,B3,C38,,background,fish,recovery,increased,4,4,16
+AMV,B3,C42,,salt,fish,recovery,increased,4,4,16
+AMV,B3,C44,,salt,no fish,recovery,increased,4.4,4,17.6
+AMV,B3,C47,,salt,fish,recovery,increased,4,3.8,15.2
+AMV,B3,C48,,salt,no fish,recovery,increased,4.8,4,19.2
+AMV,B4,C50,,salt,fish,recovery,normal,3.6,4,14.4
+AMV,B4,C51,,background,no fish,recovery,normal,3.5,3.9,13.65
+AMV,B4,C52,,salt,no fish,recovery,normal,4.2,4,16.8
+AMV,B4,C55,,salt,fish,recovery,normal,4.2,4,16.8
+AMV,B4,C56,,background,fish,recovery,normal,4.2,3.8,15.959999999999999
+AMV,B4,C57,,background,fish,recovery,normal,4,4,16
+AMV,B4,C60,,salt,no fish,recovery,normal,3.8,4,15.2
+AMV,B4,C64,,background,no fish,recovery,normal,4,4,16
