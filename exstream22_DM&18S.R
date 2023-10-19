@@ -444,7 +444,7 @@ library(ggstatsplot)
 # Comparison between species
 
 # edit from here
-x <- "Velocity"
+x <- "treatments"
 cols <- 2:11 # the 4 continuous dependent variables
 type <- "parametric" # given the large number of observations, we use the parametric version
 paired <- FALSE # FALSE for independent samples, TRUE for paired samples
@@ -563,6 +563,7 @@ permutest(mod.velocity)
 
 (perm.1 <- adonis2(spp.log.dis_alg~(Temperature*Salinity*Velocity),
                    method = perm, data = meta1, permutations = 999))
+
 
 (perm.1 <- adonis2(spp.log.dis_alg~(Temperature+Salinity+Velocity),
                    method = perm, data = meta1))

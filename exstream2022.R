@@ -63,7 +63,7 @@ data <- data.frame(
   Biomass_mg = c(50, 55, 52, 48),
   Temperature_C = c(25, 26, 27, 27)
 )
-ggplot(data_full, aes(x=duration, y=F, color=Phase)) +
+ggplot(dat_pam, aes(x=duration, y=F, color=Phase)) +
   #geom_line() +
   geom_point() +
   geom_smooth(method = "lm", alpha = .15, aes(fill = Phase)) +
@@ -73,20 +73,20 @@ ggplot(data_full, aes(x=duration, y=F, color=Phase)) +
        color="Temperature (°C)") +
   theme_minimal()
 
-ggplot(data_clean, aes(x = Day, y = Y.II., color = Phase)) +
+ggplot(dat_pam, aes(x = Day, y = Y.II., color = Phase)) +
   geom_point() +
   geom_smooth(method = "lm", alpha = .15, aes(fill = Phase)) 
 
-ggplot(data_clean, aes(x = duration, y = Y.II., color = Phase)) +
+ggplot(dat_pam, aes(x = duration, y = Y.II., color = Phase)) +
   geom_point() +
   geom_smooth(method = "lm", alpha = .15, aes(fill = Temperature)) 
 
 
-ggplot(data = data_clean, aes(x = Day, y= F, color = F)) + 
+ggplot(data = dat_pam, aes(x = Day, y= F, color = F)) + 
   geom_point() + facet_wrap(facets = vars(Temperaure)) +
   geom_smooth(method = "lm")
 
-ggplot(data_clean, aes(x=duration, y=F, color=Phase)) +
+ggplot(dat_pam, aes(x=duration, y=F, color=Phase)) +
   #geom_line() +
   geom_point() +
   geom_smooth(method="loess", se=TRUE) +
@@ -95,7 +95,7 @@ ggplot(data_clean, aes(x=duration, y=F, color=Phase)) +
        y= expression(paste("Photosynthetic biomass (F"[0], ")"))) +
   theme_minimal()
 
-ggplot(data_clean, aes(x=duration, y=Fm, color=Phase)) +
+ggplot(dat_pam, aes(x=duration, y=Fm, color=Phase)) +
   #geom_line() +
   geom_point() +
   geom_smooth(method="loess", se=TRUE) +
@@ -108,8 +108,8 @@ library(ggstatsplot)
 set.seed(123)
 
 ggbetweenstats(
-  data  = data_full,
-  x     = Temperature,
-  y     = Fm,
+  data  = dat_pam,
+  x     = Salinity,
+  y     = Y.II.,
   title = "Photosynthetic biomass response to Temperature"
 )
