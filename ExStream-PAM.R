@@ -1,9 +1,6 @@
 library(ggplot2)
 library(dplyr)
 dat <- read.csv("PAM2022_full.csv")
-# filter scraper area duringrecovery phase
-dat_pam <- dat %>% filter(!Phase == "recovery_scraped")
-pam_clean <- dat %>% filter(F >= 200)
 
 dat$Temperature[dat$Temperature == "normal"] <- "control"
 dat$treatments[dat$treatments == "NBN"] <- "NBC"
@@ -14,7 +11,16 @@ dat$Temperature <- factor(dat$Temperature)
 dat$Salinity <- factor(dat$Salinity)
 dat$Velocity <- factor(dat$Velocity)
 
-dat_pam <- dat %>% filter(F >= 100)
+# filter scraper area duringrecovery phase
+dat_pam <- dat %>% filter(!Phase == "recovery_scraped")
+recovery <- dat %>% filter(Phase == "recovery_scraped")
+pam_clean <- dat %>% filter(F >= 100)
+
+# Combine datasets
+combined_PAMdata <- rbind(pam_clean, recovery)
+# save as .csv
+write.csv(combined_PAMdata, "PAM2022_IMPclean.csv")
+
 
 ggplot(dat, aes(x = Day, y = F, color = treatments)) + geom_point() + geom_smooth()
 
