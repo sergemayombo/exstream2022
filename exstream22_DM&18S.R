@@ -14,7 +14,7 @@ library(vegan)
 # read environmental dataset
 # Microscopy
 diat <- read.csv("exstream2022_IMP_microscopy.csv", sep = ",",
-                          header = T)
+                 header = T)
 
 # make channel column as rownames
 diat1 <- diat %>% column_to_rownames(var="Channel") # change row names
@@ -30,7 +30,7 @@ metadata <- read.csv("metadata_IMP2022.csv")
 #metadata1 <- metadata[,-6]
 head(metadata)
 #metadata_IMP <- metadata1 %>%
- # filter(!is.na(F), System == "IMP")
+# filter(!is.na(F), System == "IMP")
 metadata$Temperature[metadata$Temperature == "normal"] <- "control"
 metadata$treatments[metadata$treatments == "NBN"] <- "NBC"
 metadata$treatments[metadata$treatments == "NSN"] <- "NSC"
@@ -43,8 +43,8 @@ metadata$Phase <- factor(metadata$Phase)
 metadata$treatments <- factor(metadata$treatments)
 # Reorder the factor levels
 metadata$treatments <- factor(metadata$treatments, 
-                          levels = c("NBC","RBC","NSC","NBI",
-                                     "RSC","RBI","NSI","RSI"))
+                              levels = c("NBC","RBC","NSC","NBI",
+                                         "RSC","RBI","NSI","RSI"))
 # make channel column as rownames
 meta <- metadata %>% column_to_rownames(var="Channel") # change row names
 str(meta)
@@ -532,8 +532,8 @@ sample.scrs <- left_join(sample.scrs, metadata, by = "Channel")
 sample.scrs
 # Reorder the factor levels
 sample.scrs$treatments <- factor(sample.scrs$treatments, 
-                               levels = c("NBC","RBC","NSC","NBI",
-                                          "RSC","RBI","NSI","RSI"))
+                                 levels = c("NBC","RBC","NSC","NBI",
+                                            "RSC","RBI","NSI","RSI"))
 
 
 # A new dataset containing species data also needs to be made to look at species vectors.
@@ -562,13 +562,13 @@ env.scores
 #######################################
 # add the hull
 NBC <- sample.scrs[sample.scrs$treatments == "NBC", ][chull(sample.scrs[sample.scrs$treatments == 
-                                                                                           "NBC", c("NMDS1", "NMDS2")]), ]  # hull values for control channels
+                                                                          "NBC", c("NMDS1", "NMDS2")]), ]  # hull values for control channels
 RBC <- sample.scrs[sample.scrs$treatments == "RBC", ][chull(sample.scrs[sample.scrs$treatments == 
-                                                                                           "RBC", c("NMDS1", "NMDS2")]), ]  # hull values for reduced flow treatment
+                                                                          "RBC", c("NMDS1", "NMDS2")]), ]  # hull values for reduced flow treatment
 NSC <- sample.scrs[sample.scrs$treatments == "NSC", ][chull(sample.scrs[sample.scrs$treatments == 
-                                                                                           "NSC", c("NMDS1", "NMDS2")]), ]  # hull values increased salt channels
+                                                                          "NSC", c("NMDS1", "NMDS2")]), ]  # hull values increased salt channels
 NBI <- sample.scrs[sample.scrs$treatments == "NBI", ][chull(sample.scrs[sample.scrs$treatments == 
-                                                                                           "NBI", c("NMDS1", "NMDS2")]), ]  # hull values for increased temp. treatment
+                                                                          "NBI", c("NMDS1", "NMDS2")]), ]  # hull values for increased temp. treatment
 RSC <- sample.scrs[sample.scrs$treatments == "RSC", ][chull(sample.scrs[sample.scrs$treatments == 
                                                                           "RSC", c("NMDS1", "NMDS2")]), ]  # hull values for reduced flow and increased salt channels
 RBI <- sample.scrs[sample.scrs$treatments == "RBI", ][chull(sample.scrs[sample.scrs$treatments == 
@@ -772,6 +772,8 @@ summary(diat.ISA)
 # Sequencing data (18S-V9)
 # @Serge: I simplified the below part a bit
 # I hope I got the important steps!
+library(tidyverse)
+library(vegan)
 dna <- read.table("output_exstream2022_18S_clean.csv", sep=",", 
                   header=T, row.names = 1)
 #######
@@ -964,7 +966,7 @@ meta_str <- meta1 %>% subset(Phase=="stress")
 RBC_NBC <- meta_str %>% subset(treatments=="RBC"|treatments=="NBC")
 RBC_NBC$treatments <- factor(RBC_NBC$treatments)
 dna_RBC <- dna_data3[c(21,23,28,30,33,35,39,43),]
-spp.log1 <- decostand(diat_veloc, method = "log")
+spp.log1 <- decostand(dna_RBC, method = "log")
 spp.log.dis1 <- vegdist(spp.log1, method = "bray")
 (perm.1 <- adonis2(spp.log.dis1~treatments, 
                    method = perm, data = RBC_NBC, permutations = 999))
@@ -972,8 +974,8 @@ spp.log.dis1 <- vegdist(spp.log1, method = "bray")
 NSC_NBC <- meta_str %>% subset(treatments=="NSC"|treatments=="NBC")
 NSC_NBC$treatments <- factor(NSC_NBC$treatments)
 str(NSC_NBC)
-diat_salt <- diat5[c(16,18,20,21,30,33,38,42),]
-spp.log2 <- decostand(diat_salt, method = "log")
+dna_NSC <- dna_data3[c(21,23,25,26,35,38,43,47),]
+spp.log2 <- decostand(dna_NSC, method = "log")
 spp.log.dis2 <- vegdist(spp.log2, method = "bray")
 (perm.2 <- adonis2(spp.log.dis2~treatments, 
                    method = perm, data = NSC_NBC, permutations = 999))
@@ -981,8 +983,8 @@ spp.log.dis2 <- vegdist(spp.log2, method = "bray")
 NBI_NBC <- meta_str %>% subset(treatments=="NBI"|treatments=="NBC")
 NBI_NBC$treatments <- factor(NBI_NBC$treatments)
 str(NBI_NBC)
-diat_temp <- diat5[c(16,18,30,38,56,57,59,60),]
-spp.log3 <- decostand(diat_temp, method = "log")
+dna_NBI <- dna_data3[c(5,7,21,23,35,43,62,63),]
+spp.log3 <- decostand(dna_NBI, method = "log")
 spp.log.dis3 <- vegdist(spp.log3, method = "bray")
 (perm.3 <- adonis2(spp.log.dis3~treatments, 
                    method = perm, data = NBI_NBC, permutations = 999))
@@ -990,8 +992,8 @@ spp.log.dis3 <- vegdist(spp.log3, method = "bray")
 RSC_NBC <- meta_str %>% subset(treatments=="RSC"|treatments=="NBC")
 RSC_NBC$treatments <- factor(RSC_NBC$treatments)
 str(RSC_NBC)
-diat_RSC <- diat5[c(12,16,18,19,30,35,38,43),]
-spp.log4 <- decostand(diat_RSC, method = "log")
+dna_RSC <- dna_data3[c(17,21,23,24,35,40,43,48),]
+spp.log4 <- decostand(dna_RSC, method = "log")
 spp.log.dis4 <- vegdist(spp.log4, method = "bray")
 (perm.4 <- adonis2(spp.log.dis4~treatments, 
                    method = perm, data = RSC_NBC, permutations = 999))
@@ -999,8 +1001,8 @@ spp.log.dis4 <- vegdist(spp.log4, method = "bray")
 RBI_NBC <- meta_str %>% subset(treatments=="RBI"|treatments=="NBC")
 RBI_NBC$treatments <- factor(RBI_NBC$treatments)
 str(RBI_NBC)
-diat_RBI <- diat5[c(6,16,18,30,38,51,54,62),]
-spp.log5 <- decostand(diat_RBI, method = "log")
+dna_RBI <- dna_data3[c(6,10,21,23,35,43,56,59),]
+spp.log5 <- decostand(dna_RBI, method = "log")
 spp.log.dis5 <- vegdist(spp.log5, method = "bray")
 (perm.5 <- adonis2(spp.log.dis5~treatments, 
                    method = perm, data = RBI_NBC, permutations = 999))
@@ -1008,8 +1010,8 @@ spp.log.dis5 <- vegdist(spp.log5, method = "bray")
 NSI_NBC <- meta_str %>% subset(treatments=="NSI"|treatments=="NBC")
 NSI_NBC$treatments <- factor(NSI_NBC$treatments)
 str(NSI_NBC)
-diat_NSI <- diat5[c(16,18,30,38,44,46,63,64),]
-spp.log6 <- decostand(diat_NSI, method = "log")
+dna_NSI <- dna_data3[c(13,15,21,23,35,43,49,51),]
+spp.log6 <- decostand(dna_NSI, method = "log")
 spp.log.dis6 <- vegdist(spp.log6, method = "bray")
 (perm.6 <- adonis2(spp.log.dis6~treatments, 
                    method = perm, data = NSI_NBC, permutations = 999))
@@ -1017,8 +1019,8 @@ spp.log.dis6 <- vegdist(spp.log6, method = "bray")
 RSI_NBC <- meta_str %>% subset(treatments=="RSI"|treatments=="NBC")
 RSI_NBC$treatments <- factor(RSI_NBC$treatments)
 str(RSI_NBC)
-diat_RSI <- diat5[c(1,8,16,18,30,38,45,61),]
-spp.log7 <- decostand(diat_RSI, method = "log")
+dna_RSI <- dna_data3[c(8,11,21,23,35,43,50,61),]
+spp.log7 <- decostand(dna_RSI, method = "log")
 spp.log.dis7 <- vegdist(spp.log7, method = "bray")
 (perm.7 <- adonis2(spp.log.dis7~treatments, 
                    method = perm, data = RSI_NBC, permutations = 999))
@@ -1257,7 +1259,7 @@ spp.nmds_alg <- metaMDS(spp.log.dis_alg, k = 3,trymax = 1000, permutation = 999,
                         distance = "bray", wascores = TRUE)
 
 #spp.nmds_dna_pa <- metaMDS(spp.pa_dna, k = 2,trymax = 1000, permutation = 9999,
- #                          distance = "bray", wascores = TRUE)
+#                          distance = "bray", wascores = TRUE)
 
 #dev.off()
 #dev.new()
@@ -1294,8 +1296,8 @@ sample.scrs_alg <- left_join(sample.scrs_alg, metadata, by = "Channel")
 sample.scrs_alg
 # Reorder the factor levels
 sample.scrs_alg$treatments <- factor(sample.scrs_alg$treatments, 
-                                 levels = c("NBC","RBC","NSC","NBI",
-                                            "RSC","RBI","NSI","RSI"))
+                                     levels = c("NBC","RBC","NSC","NBI",
+                                                "RSC","RBI","NSI","RSI"))
 sample.scrs_alg
 # A new dataset containing species data also needs to be made to look at species vectors.
 #This is not necessary if you don't want to show the species on the final graph.
@@ -1371,10 +1373,10 @@ grid.arrange(grobTree(textGrob("A", x = unit(0, "npc"), y = unit(1, "npc"), just
 library(patchwork)
 
 arranged_plots <- (exstream2022_nmdsDM1/ nmds.plot.alg) & plot_layout(ncol = 2) & plot_spacer(
-#  width = unit(0.1, "npc"),  # Adjust the width of the spacer
-#  height = unit(0.1, "npc"), # Adjust the height of the spacer
-#  color = "red",            # Set the color of the spacer
-#  line_type = "dotted"      # Set the line type of the spacer
+  #  width = unit(0.1, "npc"),  # Adjust the width of the spacer
+  #  height = unit(0.1, "npc"), # Adjust the height of the spacer
+  #  color = "red",            # Set the color of the spacer
+  #  line_type = "dotted"      # Set the line type of the spacer
 )
 arranged_plots
 
@@ -1544,20 +1546,20 @@ diat.ISA <- multipatt(x = diat1,
 summary(diat.ISA)
 ### cluster by phase
 diat.ISA2 <- multipatt(x = diat1,
-                      cluster = meta1$Phase,
-                      duleg = TRUE)
+                       cluster = meta1$Phase,
+                       duleg = TRUE)
 summary(diat.ISA2)
 
 
 ## 18S-V9
 diat.ISA_18S <- multipatt(x = dna_spe_trans,
-                      cluster = meta1$treatments,
-                      duleg = TRUE)
+                          cluster = meta1$treatments,
+                          duleg = TRUE)
 summary(diat.ISA_18S)
 ##Phase
 diat.ISA_18SPhase<- multipatt(x = dna_spe_trans,
-                          cluster = meta1$Phase,
-                          duleg = TRUE)
+                              cluster = meta1$Phase,
+                              duleg = TRUE)
 summary(diat.ISA_18SPhase)
 
 selected_rows <- c("N42151_1615","N37669_544","N28073_324", "N27270_242", "N30714_137")
@@ -1635,7 +1637,7 @@ significant_results <- summary(tukey_results) %>%
 ## Gamma_div 18S
 #Phase
 gamma <- read.csv("gamma_div.csv", sep = ",",
-                 header = T)
+                  header = T)
 
 # comparison: # Perform one-way ANOVA
 anova_gamma <- aov(gamma_div ~ Phase, data = gamma)
@@ -1663,7 +1665,7 @@ mean(gamma_rec$gamma_div)
 ##############################
 ## turnover and nestedness: digital microscopy
 turn_micro <- read.csv("turn_nest_micro.csv", sep = ",",
-                 header = T)
+                       header = T)
 # filter only phases: stress and recovery
 turn2 <- turn_micro %>%
   filter(Phase == "Stress" | Phase == "Recovery")
@@ -1730,7 +1732,7 @@ significant_results <- summary(tukey_results) %>%
 ## Gamma_div micro
 #Phase
 gamma_micro <- read.csv("gamma_div_micro.csv", sep = ",",
-                  header = T)
+                        header = T)
 
 # comparison: # Perform one-way ANOVA
 anova_gamma <- aov(Gamma_div ~ Phase, data = gamma_micro)
