@@ -15,7 +15,8 @@ library(vegan)
 # Microscopy
 diat <- read.csv("exstream2022_IMP_microscopy.csv", sep = ",",
                  header = T)
-
+diat1 <- diat[,-c(60,61)]
+view(diat1)
 # make channel column as rownames
 diat1 <- diat %>% column_to_rownames(var="Channel") # change row names
 eda <- colSums(diat1)
@@ -68,7 +69,7 @@ meta1$combined_var <- factor(paste(meta1$treatments, meta1$Phase, sep = "_"))
 diat2 <- diat %>% 
   pivot_longer(!Channel, names_to = "taxa", values_to = "count")
 
-# Keep only taxa with proportion >= 4, or 3% of the total relative abundance per sample.
+# Keep only taxa with proportion >= 4, or 1% of the total relative abundance per sample.
 diat3 <- subset(diat2, count >= 4)
 # Now we can spread the dataset of the most dominant taxa with at least 1% of proportion per sample
 
@@ -217,12 +218,16 @@ ggsave("exstream2022_dm1.tiff", units="in", width=12, height=12, dpi=300, compre
 # nMDS --------------------------------------------------------------------
 # digital microscopy data
 # microscopy
+library(vegan)
 spp.log <- decostand(diat5, method = "log")
+# Hellinger transformation
+spp.log.hell <- decostand(diat5, method = "hellinger")
 # presence/absence
 spp.pa_dm <- decostand(diat5, method = "pa")
 
 spp.log.dis <- vegdist(spp.log, method = "bray")
-
+# hellinger transformed
+spp.log.hell.dis <- vegdist(spp.log.hell, method = "bray")
 spp.log
 spp.log.dis
 # check
@@ -291,14 +296,22 @@ permutest(mod.phase)
 # (Bray-Curtis similarities by default). ANOSIM uses only ranks of Bray-Curtis,
 # so the former preserves more information.
 # stressor phase
-(perm.1 <- adonis2(spp.log.dis~(Temperature*Salinity*Velocity), 
+(perm.1 <- adonis2(spp.log.dis~(Temperature*Salinity*Velocity*Phase), 
                    subset = Phase == "stress",
                    method = perm, data = meta1, permutations = 999))
 
-(perm.1 <- adonis2(spp.log.dis~Velocity, 
+# Hellinger transformed
+(perm.1 <- adonis2(spp.log.hell.dis~(Temperature*Salinity*Velocity*Phase), 
                    subset = Phase == "stress",
                    method = perm, data = meta1, permutations = 999))
 
+(perm.1 <- adonis2(spp.log.hell.dis~(Temperature*Salinity*Velocity*Phase), 
+                   subset = Phase == "recovery",
+                   method = perm, data = meta1, permutations = 999))
+
+
+(perm.1 <- adonis2(spp.log.hell.dis~(Temperature*Salinity*Velocity*Phase), 
+                   method = perm, data = meta1, permutations = 999))
 
 # recovery phase
 (perm.1 <- adonis2(spp.log.dis~(Temperature*Salinity*Velocity), 
@@ -875,8 +888,9 @@ spec_trans <- t(spec)
 sapply(spec_trans, class)
 
 spp.log_alg <- decostand(dna_spe_trans, method = "log")
+spp.hell.alg <- decostand(dna_spe_trans, method = "hellinger")
 spp.log.dis_alg <- vegdist(spp.log_alg, method = "bray")
-
+spp.hell.alg.dis <- vegdist(spp.hell.alg, method = "bray")
 
 # betadisper --------------------------------------------------------------
 
@@ -932,6 +946,9 @@ permutest(mod.phase)
 # so the former preserves more information.
 
 (perm.2 <- adonis2(spp.log.dis_alg~(Temperature*Salinity*Velocity), 
+                   method = perm, data = meta1, permutations = 999))
+
+(perm.2 <- adonis2(spp.hell.alg.dis~(Temperature*Salinity*Velocity*Phase), 
                    method = perm, data = meta1, permutations = 999))
 # Round the values to 2 decimal places
 result_perm2 <- lapply(perm.2, function(x) round(x, 2))
@@ -1042,8 +1059,9 @@ meta_rec <- meta1 %>% subset(Phase=="recovery")
 # select treatments for comparison of the communities
 RBC_NBC <- meta_rec %>% subset(treatments=="RBC"|treatments=="NBC")
 RBC_NBC$treatments <- factor(RBC_NBC$treatments)
-diat_veloc <- diat5[c(13,14,17,24,29,32,37,40),]
-spp.log1 <- decostand(diat_veloc, method = "log")
+str(RBC_NBC)
+dna_RBC <- dna_data3[c(18,19,22,29,34,37,42,45),]
+spp.log1 <- decostand(dna_RBC, method = "log")
 spp.log.dis1 <- vegdist(spp.log1, method = "bray")
 (perm.1 <- adonis2(spp.log.dis1~treatments, 
                    method = perm, data = RBC_NBC, permutations = 999))
@@ -1051,8 +1069,8 @@ spp.log.dis1 <- vegdist(spp.log1, method = "bray")
 NSC_NBC <- meta_rec %>% subset(treatments=="NSC"|treatments=="NBC")
 NSC_NBC$treatments <- factor(NSC_NBC$treatments)
 str(NSC_NBC)
-diat_salt <- diat5[c(13,14,22,26,31,32,37,39),]
-spp.log2 <- decostand(diat_salt, method = "log")
+dna_NSC <- dna_data3[c(18,19,27,31,36,37,42,44),]
+spp.log2 <- decostand(dna_NSC, method = "log")
 spp.log.dis2 <- vegdist(spp.log2, method = "bray")
 (perm.2 <- adonis2(spp.log.dis2~treatments, 
                    method = perm, data = NSC_NBC, permutations = 999))
@@ -1060,8 +1078,8 @@ spp.log.dis2 <- vegdist(spp.log2, method = "bray")
 NBI_NBC <- meta_rec %>% subset(treatments=="NBI"|treatments=="NBC")
 NBI_NBC$treatments <- factor(NBI_NBC$treatments)
 str(NBI_NBC)
-diat_temp <- diat5[c(5,7,13,14,32,37,47,49),]
-spp.log3 <- decostand(diat_temp, method = "log")
+dna_NBI <- dna_data3[c(4,9,18,19,37,42,52,54),]
+spp.log3 <- decostand(dna_NBI, method = "log")
 spp.log.dis3 <- vegdist(spp.log3, method = "bray")
 (perm.3 <- adonis2(spp.log.dis3~treatments, 
                    method = perm, data = NBI_NBC, permutations = 999))
@@ -1069,8 +1087,8 @@ spp.log.dis3 <- vegdist(spp.log3, method = "bray")
 RSC_NBC <- meta_rec %>% subset(treatments=="RSC"|treatments=="NBC")
 RSC_NBC$treatments <- factor(RSC_NBC$treatments)
 str(RSC_NBC)
-diat_RSC <- diat5[c(13,14,15,27,32,36,37,41),]
-spp.log4 <- decostand(diat_RSC, method = "log")
+dna_RSC <- dna_data3[c(18,19,20,32,37,41,42,46),]
+spp.log4 <- decostand(dna_RSC, method = "log")
 spp.log.dis4 <- vegdist(spp.log4, method = "bray")
 (perm.4 <- adonis2(spp.log.dis4~treatments, 
                    method = perm, data = RSC_NBC, permutations = 999))
@@ -1078,8 +1096,8 @@ spp.log.dis4 <- vegdist(spp.log4, method = "bray")
 RBI_NBC <- meta_rec %>% subset(treatments=="RBI"|treatments=="NBC")
 RBI_NBC$treatments <- factor(RBI_NBC$treatments)
 str(RBI_NBC)
-diat_RBI <- diat5[c(2,9,13,14,32,37,50,52),]
-spp.log5 <- decostand(diat_RBI, method = "log")
+dna_RBI <- dna_data3[c(1,12,18,19,37,42,55,57),]
+spp.log5 <- decostand(dna_RBI, method = "log")
 spp.log.dis5 <- vegdist(spp.log5, method = "bray")
 (perm.5 <- adonis2(spp.log.dis5~treatments, 
                    method = perm, data = RBI_NBC, permutations = 999))
@@ -1087,8 +1105,8 @@ spp.log.dis5 <- vegdist(spp.log5, method = "bray")
 NSI_NBC <- meta_rec %>% subset(treatments=="NSI"|treatments=="NBC")
 NSI_NBC$treatments <- factor(NSI_NBC$treatments)
 str(NSI_NBC)
-diat_NSI <- diat5[c(10,11,13,14,32,37,48,55),]
-spp.log6 <- decostand(diat_NSI, method = "log")
+dna_NSI <- dna_data3[c(14,16,18,19,37,42,53,60),]
+spp.log6 <- decostand(dna_NSI, method = "log")
 spp.log.dis6 <- vegdist(spp.log6, method = "bray")
 (perm.6 <- adonis2(spp.log.dis6~treatments, 
                    method = perm, data = NSI_NBC, permutations = 999))
@@ -1096,8 +1114,8 @@ spp.log.dis6 <- vegdist(spp.log6, method = "bray")
 RSI_NBC <- meta_rec %>% subset(treatments=="RSI"|treatments=="NBC")
 RSI_NBC$treatments <- factor(RSI_NBC$treatments)
 str(RSI_NBC)
-diat_RSI <- diat5[c(3,4,13,14,32,37,53,58),]
-spp.log7 <- decostand(diat_RSI, method = "log")
+dna_RSI <- dna_data3[c(2,3,18,19,37,42,58,64),]
+spp.log7 <- decostand(dna_RSI, method = "log")
 spp.log.dis7 <- vegdist(spp.log7, method = "bray")
 (perm.7 <- adonis2(spp.log.dis7~treatments, 
                    method = perm, data = RSI_NBC, permutations = 999))
@@ -1925,3 +1943,9 @@ print(permanova_result)
 ####################################################################
 # comparison of individual treatment against control
 # digital  microscopy
+############################
+# Priority effects
+library(indicspecies)
+group <- meta1$Phase
+prio_eff <- multipatt(diat5,meta1$Phase)
+summary(prio_eff)
