@@ -14,14 +14,10 @@ library(vegan)
 # read environmental dataset
 # Microscopy
 diat <- read.csv("exstream2022_IMP_microscopy.csv", sep = ",",
-<<<<<<< HEAD
                  header = T)
 diat1 <- diat[,-c(60,61)]
 view(diat1)
-=======
-                          header = T)
 
->>>>>>> 5997fedc77a4a453d580e63d133156747a2321ea
 # make channel column as rownames
 diat1 <- diat %>% column_to_rownames(var="Channel") # change row names
 eda <- colSums(diat1)
