@@ -2771,3 +2771,35 @@ prio_eff <- multipatt(diat5,meta1$Phase)
 summary(prio_eff)
 =======
 >>>>>>> 5997fedc77a4a453d580e63d133156747a2321ea
+
+
+#############################################################################
+# Script for deleting unnecessary files on Github
+# Install and load the git2r package
+#install.packages("git2r")
+library(git2r)
+
+# Clone the repository (if not already cloned)
+# repo <- clone("https://github.com/yourusername/yourrepository.git", "path/to/local/repo")
+
+# Open the existing repository (if already cloned)
+repo <- repository("C:/Users/Serge/Documents/PhD_thesis_Mayombo/exstream2022")
+
+# Delete the files
+files_to_delete <- c("algal_biomass (Fm).tiff", "algal_biomass (Fo).tiff", 
+                     "algal_biomass_phases(Fo).tiff", "exstream2022_dm.tiff", 
+                     "exstream2022_dm1.tiff", "exstream2022_dm_treat.tiff")
+for (file in files_to_delete) {
+  file_path <- file.path("C:/Users/Serge/Documents/PhD_thesis_Mayombo/exstream2022", file)
+  if (file.exists(file_path)) {
+    file.remove(file_path)
+    add(repo, file)
+  }
+}
+
+# Commit the changes
+commit(repo, "Deleted unnecessary files")
+
+# Push the changes to the GitHub repository
+cred <- cred_user_pass("sergemayombo@yahoo.fr", "m6y0mb0250581")
+push(repo, credentials = cred)
